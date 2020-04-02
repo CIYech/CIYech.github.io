@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Reverse number with different approaches in many programming languages: Phase 0</title>
+		<meta charset = "UTF-8">
+		<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/tomorrow-night-blue.min.css">
+	</head>
+	<body>
+		<div>
+			<h1>Reverse number with different approaches in many programming languages: Phase 0</h1>
+
+			<h3>Why does this topic exists ?</h3>
+			<p>
+				I have been practising coding for about 4 years until the day this blog
+				published. Learning many programming languages, solving many(maybe)
+				problems, reading many others' code, etc. Yup, pretty much many things
+				to say before getting to say why I write this topic, so let's cut
+				the flow a little bit. If you don't know yet what does it mean by 
+				`reverse number`, you can see <a href = "#definition">this.</a>
+				From now, I will assume that you know what that means. OK! Let's get to 
+				work. Before, to reverse number, we often using
+				<a href = "#arithmetic">Arithmetic method</a>.
+				Then, one sunny morning, I woke up and thought, is there other way to 
+				perform the same task but less
+				<span style = "background-color:grey">numbers' manipulation</span>
+				, that is when I came up with <a href = "#string">new approach.</a>
+			</p>
+
+			<h4>Oh, really!. Don't bit around the bush, just get to the point. Why you 
+			write this blog?</h4>
+
+			<p>
+				Well, the point is I want to record the way of how I achieved the new 
+				method to (old) problems. Secondly, someone need to write a blog about
+				this topic so that everyone accidentally meet this blog knows that there
+				are many many ways to approach the problems.
+			</p>
+
+			<h3 id = "definition">What does it mean by reverse number?</h3>
+			<p>
+				OK!. That's a big question. I mean, not by its size or difficulties, but
+				by its importance to guide us what to do. Sometimes, before coding(and 
+				probably doing anything else), you need to know <b>what to do</b>(For
+				real, it's vitally important). Enough distraction, let's get to real work.
+				Reverse number by making the number <b>reversed</b>(It does sound like a
+				recursive definition because it's obvious, how do I suppose to explain 
+				something obvious). Let's look at some example, shall we?
+			</p>
+			<code>
+				Reverse(123456) -> 654321 <br/>
+				Reverse(9878) -> 8798 <br/>
+				Reverse(1) -> 1
+			</code>
+			<p>
+				I hope you get the idea now because to read the rest of this blog, it's 
+				required to understand <b>what does `reverse number` do</b>. Let's try
+				another example to see if you are totally understand it. Press the button
+				to show the answer(but let's make a guess first).
+			</p>
+			<p>
+				Reverse number is like <b>MIRROR</b>ing them.
+			</p>
+			<img src = "a.jpg" alt = "Some picture about mirror"/>
+			<div class = "interactive">
+				<p id = "1">Reverse(98756) -> <span id = "answer_1">?</span></p>
+				<button onclick="document.getElementById('answer_1').innerHTML=65789;">Show</button>
+				<p id = "2">Reverse(10000000000000) -> <span id = "answer_2">?</span></p>
+				<button onclick="document.getElementById('answer_2').innerHTML=1;">Show</button>
+				<p id = "3">Reverse(000000000000001) -> <span id = "answer_3">?</span></p>
+				<button onclick="document.getElementById('answer_3').innerHTML=1;">Show</button>
+			</div>
+			<p>
+				For example 1, it does sound simple, right? But what about example 2 and 
+				3, if the answer 1 surprises you. Well, you're not alone. Keep reading to
+				see to find the reason.
+			</p>
+
+			<h3>What is the "old approach" to reverse a number ?</h3>
+
+			<p>
+				Before introducing the "old approach", let's first look at the number from
+				the mathematic lens.<br/>
+				12345 = 10000 + 2000 + 300 + 40 + 5<br/>
+				This can be intepreted more under the combination of 10 multiplers<br/>
+				12345 = 1*10^4 + 2*10^3 + 3*10^2 + 4*10^1 + 5*10^0<br/>
+				From the idea observed from the len of mathematician, we see that every
+				unsigned integer can always be represented under the combination of 10
+				multiplers.
+				Now, let's look at <b>what we have to do</b>. To reverse number, for 
+				example, 12345, it's must become 54321, which mean that<br/>
+				12345 = 1*10^4 + 2*10^3 + 3*10^2 + 4*10^1 + 5*10^0<br/>
+				Now, become<br/>
+				54321 = 5*10^4 + 4*10^3 + 3*10^2 + 2*10^1 + 1*10^0<br/>
+				At first, it's <span style = "background:grey">1*10^4</span>, later, it
+				become <span style = "background:grey">5*10^4</span>, and so on.
+			</p>
+
+			<table>
+				<tr>
+					<td>Column</th>
+					<td>4</td>
+					<td>3</td>
+					<td>2</td>
+					<td>1</td>
+					<td>0</td>
+				</tr>
+				<tr>
+					<td>Number</td>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+				</tr>
+			</table>
+
+			<p>
+				As eye can discern, each individual digit is multiplied with 10 to the 
+				power of column number. With little help with divide(/) and modulus(%)
+				we can get the digit then multiply it with corresponding column.
+			</p>
+
+			<p>
+				We will use small number here so a demostration, let's say 123. Now, we
+				need to get the last number(it's number 3). Using modulus, we get<br/>
+				<span style = "background:grey">3 = 123 % 10</span><br/>
+				OK, that good, we now need to get number 2. Let's use modulus again, this
+				time % 100 will give us 2. Wait a minute, it's really 2. Let's try it, 
+				shall we?<br/>
+				<span style = "background:grey">123 % 100 = 23(that's not 2)</span><br/>
+				At this moment, our hypothesis seems to be wrong, isn't it?<br/>
+				<span style = "background:grey">123 = 100 + 23.</span><br/>
+				Therefore, % 100 will result in 23. But how about 120.
+				<span style = "background:grey">120 % 100 = 20.</span><br/>
+				Yup, it doesn't work, either. But wait, we got 20, 20 / 10 = 2. This is
+				the moment of truth.<br/>
+				<span style = "background:grey">
+					(123 - 3) = 120<br/>
+					120 % 100 = 20<br/>
+					20 / 10 = 2<br/>
+				</span>
+				It seems like a long step to deal with when it come to number 1.<br/>
+				<span style = "background:grey">((123 - 20 - 3) % 1000) / 10 = 1</span>
+				Yup, pretty long way, and we have to deal with 1000, what if the number 
+				is 1234567890987, how many power of 10 do we have to deal with. I think
+				now we should use the power of computer. Let's say I have a power 
+				function named `floor`. floor(12.5) = 12, floor(4.0) = 4. This function
+				return the integer part of any real number. Now, our method will be 
+				reduced to just a few lines with small number.
+				<span style = "background: grey">
+					floor(123 / 10) % 10 = floor(12.3) % 10 = 12 % 10 = 2
+				</span><br/>
+				That's cool, but what about, number 1. Well, let's said it now, we change
+				our mind, we don't need to reverse number 123, we just need 12
+				(=floor(123 / 10)). Getting 1 is just 1=floor(12 / 10) % 10. Simple, 
+				right?
+			</p>
+
+			<p>
+				Up until now, we already figure out how to get each digit individually.
+				Let's summarize it:
+				<span style = "background: grey">
+					3 = 123 % 10
+					2 = floor(123 / 10) % 10
+					1 = floor(floor(123 / 10) / 10) % 10
+				</span><br/>
+				Pretty simple, right? Now, in order to get 321, which mean 3*100 + 2*10+1
+				You may now recognize some similarities between the number of zeroes
+				behind 1 equal to number of missing `floor`. Well, it's little vague, 
+				allow me to elaborate it for you. Number 1 has 2 `floor` appears 
+				according to the formula above, and that two `floor` is the biggest
+				number of floor of the three numbers(1,2,3). Therefore, we mark 1 as
+				standard, number 3 has 0 `floor`, it's missing 2 floors, which means
+				it need 2 zeroes(100); on the other hand, 2 has 1 `floor`, missing 1
+				so it has 1 zero(10) and last but not least, 1 has 2 `floor`, missing 0
+				so it has 0 zero(1).
+			</p>
+
+			<p>
+				I hope I have explained enough about the workhorse of `reverse number`
+				in mathematics concept. Now it's time for some codes.
+			</p>
+			<pre><code class = "javascript">
+var sum = 0;
+var digit = 0;
+var num = 321;
+while (num != 0) {
+	digit = num % 10;
+	sum = sum * 10 + digit;
+	num = Math.floor(num / 10);
+}				
+			</code></pre>
+			<p>
+				The code is self-explanatory itself. However, it's a little bit different
+				from the mathematics way. Let me crack the code into a much familiar way.
+				First, we have some declaration of variable. A digit and sum, and default value of num = 321. Then we go to the while loop. The condition
+				here to execute the while-loop body is the num must be different from 0. 
+				At start, we assume num is 321; therefore, obviously, `num != 0` must be
+				true. Then we get the number 1 by `num % 10`, after that, we take `sum * 
+				10 + digit`, which is `0*10+1` = 1 => sum now is 1. Last but not least, 
+				we divide num by 10, which results in 32.1 and flooring it to get 32 =>
+				num is now equals 32. After the whole while-loop body is executed, we go
+				back to check the condition `num != 0`, which turns out to be true, and
+				we repeat the whole process again with value of `num = 32`.
+			</p>
+			<p>
+				The table below record all the values of `num`, `sum` and `digit`
+				accordings to the number of while-loop executed.
+			</p>
+			<table>
+				<tr>
+					<th>Number of loop</th>
+					<th>num</th>
+					<th>sum</th>
+					<th>digit</th>
+				</tr>
+				<tr>
+					<td>0</td>
+					<td>321</td>
+					<td>0</td>
+					<td>0</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>32</td>
+					<td>1</td>
+					<td>1</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>3</td>
+					<td>12</td>
+					<td>2</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>0</td>
+					<td>123</td>
+					<td>3</td>
+				</tr>
+			</table>
+			<p>
+				And that is the old approach to reverse number. Pretty cool, right?
+			</p>
+			<h2>
+				What about the "new approach" to reverse number?
+			</h2>
+		</div>
+
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/javascript.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+	</body>
+</html>
